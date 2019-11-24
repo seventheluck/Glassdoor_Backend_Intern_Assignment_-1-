@@ -1,5 +1,7 @@
 package com.glassdoor.test.intern.first.database;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -9,32 +11,36 @@ import static org.junit.Assert.*;
  */
 public class UserTest {
 
+    private static User user;
+
+    @BeforeClass
+    public static void prepare() {
+        user = User.builder()
+                .userId(100L)
+                .userAddress("123 Westlake Ave Seattle WA")
+                .userName("Peter").build();
+    }
+
     @Test
     public void testToString() {
-        long userId = 100L;
-        String userName = "Peter";
-        String userAddress = "123 Westlake Ave Seattle WA";
-        User user = new User(userId, userName, userAddress);
-        assertEquals("User{userId=100, userName=Peter, userAddress=123 Westlake Ave Seattle WA}", user.toString());
+        assertEquals("User(userId=100, userName=Peter, userAddress=123 Westlake Ave Seattle WA)", user.toString());
     }
 
     @Test
     public void testEquals_happy() {
-        long userId = 100L;
-        String userName = "Peter";
-        String userAddress = "123 Westlake Ave Seattle WA";
-        User user = new User(userId, userName, userAddress);
-        User user_copy = new User(userId, userName, userAddress);
+        User user_copy = User.builder()
+                .userId(100L)
+                .userAddress("123 Westlake Ave Seattle WA")
+                .userName("Peter").build();
         assertEquals(user, user_copy);
     }
 
     @Test
     public void testEquals_notEqual() {
-        long userId = 100L;
-        String userName = "Peter";
-        String userAddress = "123 Westlake Ave Seattle WA";
-        User user = new User(userId, userName, userAddress);
-        User user_copy = new User(userId, "peter", userAddress);
+        User user_copy = User.builder()
+                .userId(100L)
+                .userAddress("123 Westlake Ave Seattle WA")
+                .userName("peter").build();
         assertNotEquals(user, user_copy);
     }
 
@@ -43,11 +49,10 @@ public class UserTest {
      */
     @Test
     public void testHashCode() {
-        long userId = 100L;
-        String userName = "Peter";
-        String userAddress = "123 Westlake Ave Seattle WA";
-        User user = new User(userId, userName, userAddress);
-        User user_copy = new User(userId, userName, userAddress);
+        User user_copy = User.builder()
+                .userId(100L)
+                .userAddress("123 Westlake Ave Seattle WA")
+                .userName("Peter").build();
         assertEquals(user.hashCode(), user_copy.hashCode());
     }
 } 

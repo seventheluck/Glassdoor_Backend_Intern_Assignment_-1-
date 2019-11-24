@@ -5,6 +5,7 @@ import com.glassdoor.test.intern.first.database.UserDatabaseImpl;
 import com.glassdoor.test.intern.first.database.UserDatabase;
 import com.glassdoor.test.intern.first.metrics.Metrics;
 import com.google.common.base.Preconditions;
+import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,7 @@ public class PaymentProcessorImpl implements PaymentProcessor {
     private final Metrics metrics = Metrics.nullMetrics();
 
     @Override
-    public PaymentResponse tryProcessPayment(PaymentRequest request) {
+    public PaymentResponse tryProcessPayment(@NonNull PaymentRequest request) {
         Preconditions.checkNotNull(request);
         metrics.addCount("process_payment", 1);
 
@@ -66,7 +67,7 @@ public class PaymentProcessorImpl implements PaymentProcessor {
     // I change this method to private because it is internally used.
     // I change the type of "amount" from int to BigDecimal because of the reasons written in "PaymentRequest" POJO.
 
-    private void submitPayment(String card, BigDecimal amount) {
+    private void submitPayment(@NonNull String card, @NonNull BigDecimal amount) {
         //Don't implement this.
     }
 }

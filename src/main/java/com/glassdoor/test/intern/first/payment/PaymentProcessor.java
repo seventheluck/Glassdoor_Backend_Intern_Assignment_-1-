@@ -1,5 +1,7 @@
 package com.glassdoor.test.intern.first.payment;
 
+import lombok.NonNull;
+
 public interface PaymentProcessor {
 
     // I abstract the key method from old PaymentProcess into this interface.
@@ -24,5 +26,5 @@ public interface PaymentProcessor {
      * @param request The payment request. Required.
      * @return The payment response.
      */
-    PaymentResponse tryProcessPayment(final PaymentRequest request);
+    PaymentResponse tryProcessPayment(@NonNull final PaymentRequest request);
 }

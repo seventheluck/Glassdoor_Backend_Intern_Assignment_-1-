@@ -1,5 +1,7 @@
 package com.glassdoor.test.intern.first.database;
 
+import lombok.NonNull;
+
 public interface UserDatabase {
     /**
      * Add a new user by userId, userName, and userAddress.
@@ -11,7 +13,7 @@ public interface UserDatabase {
      * @param userAddress the user address, cannot be empty.
      * @return the added user.
      */
-    User addNewUser(long userId, String userName, String userAddress);
+    User addNewUser(final long userId, @NonNull final String userName, @NonNull final String userAddress);
 
     /**
      * Get user from database by userId.
@@ -20,5 +22,5 @@ public interface UserDatabase {
      * @param userId the userId, must be greater than 0.
      * @return the user if found.
      */
-    User getUserById(long userId);
+    User getUserById(final long userId);
 }

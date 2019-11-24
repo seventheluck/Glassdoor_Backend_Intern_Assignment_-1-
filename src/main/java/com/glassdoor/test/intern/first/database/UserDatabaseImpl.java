@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Stopwatch;
 import com.google.common.base.Strings;
 import com.google.common.primitives.Longs;
+import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,7 +104,7 @@ public class UserDatabaseImpl implements UserDatabase {
      * Parse a string line ( read from DB) into a User object.
      * If this is not a valid entry, it will return null.
      */
-    private static User parseUser(final String line) {
+    private static User parseUser(@NonNull final String line) {
         // We assume the data is in the format of
         // [id] [name]  [address]
         // Example:
@@ -127,16 +128,16 @@ public class UserDatabaseImpl implements UserDatabase {
         return new User(userId, userName, userAddress);
     }
 
-    private static void validateUserId(Long userId) {
+    private static void validateUserId(@NonNull final Long userId) {
         Preconditions.checkArgument(userId != null, "User ID is required");
         Preconditions.checkArgument(userId > 0, "User ID must be greater than 0. But it is " + userId);
     }
 
-    private static void validateUserName(String userName) {
+    private static void validateUserName(@NonNull final String userName) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(userName), "User Name is required");
     }
 
-    private static void validateUserAddress(String userAddress) {
+    private static void validateUserAddress(@NonNull final String userAddress) {
         Preconditions.checkArgument(!Strings.isNullOrEmpty(userAddress), "User address cannot be empty");
     }
 
@@ -144,7 +145,7 @@ public class UserDatabaseImpl implements UserDatabase {
     // So when the system shutdown, the newly added users will be lost.
     // To simplify the system, I assume this is acceptable.
     @Override
-    public User addNewUser(long userId, String userName, String userAddress) {
+    public User addNewUser(final long userId, @NonNull final String userName, @NonNull final String userAddress) {
         validateUserId(userId);
         validateUserName(userName);
         validateUserAddress(userAddress);
@@ -165,7 +166,7 @@ public class UserDatabaseImpl implements UserDatabase {
     }
 
     @Override
-    public User getUserById(long userId) {
+    public User getUserById(final long userId) {
         validateUserId(userId);
         metrics.addCount("getUserById", 1);
         Stopwatch stopwatch = Stopwatch.createStarted();
